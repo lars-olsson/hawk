@@ -27,8 +27,6 @@ module Data.Monoid.Ord
     , infinity
     ) where
 
-import Data.Monoid (Monoid, mappend, mempty)
-
 -- | The 'Monoid' @('max','minBound')@
 newtype Max a = Max { getMax :: a } deriving (Eq,Ord,Show,Read,Bounded)
 
