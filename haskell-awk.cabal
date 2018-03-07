@@ -87,6 +87,7 @@ Test-suite reference
   Type:                 exitcode-stdio-1.0
   Ghc-Options:          -Wall
   Build-Depends:        base >=4.6.0.1 && <5
+                      , aeson
                       , bytestring
                       , containers
                       , directory

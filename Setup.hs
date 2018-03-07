@@ -36,6 +36,7 @@ main = do
                                   , ("--log=$pkgid-$test-suite.log", [])
                                   , ("--machine-log=$pkgid.log", [])
                                   , ("--show-details=failures", [])
+                                  , ("reference", [])
                                   ] args)
     
     defaultMainArgs args
