@@ -61,6 +61,7 @@ main = do
     doctest' "src/System/Directory/Extra.hs"
     doctest' "src/Control/Monad/Trans/Uncertain.hs"
     doctest' "src/Control/Monad/Trans/OptionParser.hs"
+    doctest' "runtime/System/Console/Hawk/Representable.hs"
     hspec $ do
         ReprTest.reprSpec'
         ReprTest.reprSpec

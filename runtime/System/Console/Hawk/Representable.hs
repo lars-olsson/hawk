@@ -48,6 +48,11 @@ class (Show a) => ListAsRow a where
     listRepr' d = C8.intercalate d . L.map (C8.pack . show)
 
 -- |Automatically derive from show
+-- Test automatically derived instances
+-- >>> mapM_ Data.ByteString.Lazy.Char8.putStrLn $ repr Data.ByteString.Lazy.Char8.empty ([8] :: [Integer])
+-- 8
+-- >>> mapM_ Data.ByteString.Lazy.Char8.putStrLn $ repr Data.ByteString.Lazy.Char8.empty [()]
+-- ()
 instance {-# OVERLAPPABLE #-} (Show a) => ListAsRow a
 
 instance (ListAsRow a) => ListAsRow [a] where
@@ -134,6 +139,11 @@ class (Show a) => Row a where
     repr' _ = C8.pack . show
 
 -- |Automatically derive from show
+-- Test automatically derived instances
+-- >>> Data.ByteString.Lazy.Char8.putStrLn $ repr' (Data.ByteString.Lazy.Char8.pack " ") ([1,2,3,4] :: [Integer])
+-- 1 2 3 4
+-- >>> Data.ByteString.Lazy.Char8.putStrLn $ repr' (Data.ByteString.Lazy.Char8.pack " ") ([(),()] :: [()])
+-- () ()
 instance {-# OVERLAPPABLE #-} (Show a) => Row a
 
 instance Row Char where
@@ -244,6 +254,9 @@ class (Row a) => ListAsRows a where
     listRepr d = L.map (repr' d)
 
 -- |Automatically derive from show
+-- Test automatically derived instances
+-- >>> mapM_ Data.ByteString.Lazy.Char8.putStrLn $ repr Data.ByteString.Lazy.Char8.empty [()]
+-- ()
 instance {-# OVERLAPPABLE #-} (Show a) => ListAsRows a
 
 instance (Row a) => ListAsRows (Maybe a)
@@ -292,6 +305,11 @@ class (Show a) => Rows a where
     repr _ = (:[]) . C8.pack . show
 
 -- |Automatically derive from show
+-- Test automatically derived instances
+-- >>> mapM_ Data.ByteString.Lazy.Char8.putStrLn $ repr (Data.ByteString.Lazy.Char8.singleton '\n') ["a", "b", "c"]
+-- a
+-- b
+-- c
 instance {-# OVERLAPPABLE #-} (Show a) => Rows a
 
 instance Rows () where
