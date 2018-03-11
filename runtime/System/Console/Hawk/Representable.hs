@@ -1,4 +1,4 @@
-{-# LANGUAGE FlexibleInstances, UndecidableInstances, OverlappingInstances#-}
+{-# LANGUAGE FlexibleInstances, UndecidableInstances #-}
 
 --   Copyright 2013 Mario Pastorelli (pastorelli.mario@gmail.com) Samuel Gélineau (gelisam@gmail.com)
 --
@@ -47,12 +47,8 @@ class (Show a) => ListAsRow a where
     listRepr' :: ByteString -> [a] -> ByteString
     listRepr' d = C8.intercalate d . L.map (C8.pack . show)
 
-instance ListAsRow Bool
-instance ListAsRow Float
-instance ListAsRow Double
-instance ListAsRow Int
-instance ListAsRow Integer
-instance ListAsRow ()
+-- |Automatically derive from show
+instance {-# OVERLAPPABLE #-} (Show a) => ListAsRow a
 
 instance (ListAsRow a) => ListAsRow [a] where
     -- todo check the first delimiter if it should be d
@@ -138,14 +134,7 @@ class (Show a) => Row a where
     repr' _ = C8.pack . show
 
 -- |Automatically derive from show
-instance (Show a) => Row a
-
-instance Row Bool
-instance Row Float
-instance Row Double
-instance Row Int
-instance Row Integer
-instance Row ()
+instance {-# OVERLAPPABLE #-} (Show a) => Row a
 
 instance Row Char where
     repr' _ = C8.singleton
@@ -255,16 +244,9 @@ class (Row a) => ListAsRows a where
     listRepr d = L.map (repr' d)
 
 -- |Automatically derive from show
-instance (Show a) => ListAsRows a
+instance {-# OVERLAPPABLE #-} (Show a) => ListAsRows a
 
-instance ListAsRows ByteString
-instance ListAsRows Bool
-instance ListAsRows Double
-instance ListAsRows Float
-instance ListAsRows Int
-instance ListAsRows Integer
 instance (Row a) => ListAsRows (Maybe a)
-instance ListAsRows ()
 instance (ListAsRow a,ListAsRows a) => ListAsRows [a]
 instance (Row a,Row b) => ListAsRows (a,b)
 instance (Row a,Row b,Row c) => ListAsRows (a,b,c)
@@ -309,13 +291,8 @@ class (Show a) => Rows a where
          -> [C8.ByteString]
     repr _ = (:[]) . C8.pack . show
 
-instance (Show a) => Rows a
-
-instance Rows Bool
-instance Rows Double
-instance Rows Float
-instance Rows Int
-instance Rows Integer
+-- |Automatically derive from show
+instance {-# OVERLAPPABLE #-} (Show a) => Rows a
 
 instance Rows () where
     repr _ = const [C8.empty]
