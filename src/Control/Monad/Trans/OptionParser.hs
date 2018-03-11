@@ -3,7 +3,6 @@
 --   designed to look as if the options had more precise types than String.
 module Control.Monad.Trans.OptionParser where
 
-import Control.Applicative
 import Control.Monad
 import "mtl" Control.Monad.Identity
 import "mtl" Control.Monad.Trans

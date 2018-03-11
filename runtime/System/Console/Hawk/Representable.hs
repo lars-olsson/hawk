@@ -1,3 +1,5 @@
+{-# LANGUAGE FlexibleInstances, UndecidableInstances #-}
+
 --   Copyright 2013 Mario Pastorelli (pastorelli.mario@gmail.com) Samuel Gélineau (gelisam@gmail.com)
 --
 --   Licensed under the Apache License, Version 2.0 (the "License");
@@ -45,12 +47,13 @@ class (Show a) => ListAsRow a where
     listRepr' :: ByteString -> [a] -> ByteString
     listRepr' d = C8.intercalate d . L.map (C8.pack . show)
 
-instance ListAsRow Bool
-instance ListAsRow Float
-instance ListAsRow Double
-instance ListAsRow Int
-instance ListAsRow Integer
-instance ListAsRow ()
+-- |Automatically derive from show
+-- Test automatically derived instances
+-- >>> mapM_ Data.ByteString.Lazy.Char8.putStrLn $ repr Data.ByteString.Lazy.Char8.empty ([8] :: [Integer])
+-- 8
+-- >>> mapM_ Data.ByteString.Lazy.Char8.putStrLn $ repr Data.ByteString.Lazy.Char8.empty [()]
+-- ()
+instance {-# OVERLAPPABLE #-} (Show a) => ListAsRow a
 
 instance (ListAsRow a) => ListAsRow [a] where
     -- todo check the first delimiter if it should be d
@@ -135,12 +138,13 @@ class (Show a) => Row a where
           -> ByteString
     repr' _ = C8.pack . show
 
-instance Row Bool
-instance Row Float
-instance Row Double
-instance Row Int
-instance Row Integer
-instance Row ()
+-- |Automatically derive from show
+-- Test automatically derived instances
+-- >>> Data.ByteString.Lazy.Char8.putStrLn $ repr' (Data.ByteString.Lazy.Char8.pack " ") ([1,2,3,4] :: [Integer])
+-- 1 2 3 4
+-- >>> Data.ByteString.Lazy.Char8.putStrLn $ repr' (Data.ByteString.Lazy.Char8.pack " ") ([(),()] :: [()])
+-- () ()
+instance {-# OVERLAPPABLE #-} (Show a) => Row a
 
 instance Row Char where
     repr' _ = C8.singleton
@@ -249,14 +253,13 @@ class (Row a) => ListAsRows a where
                -> [ByteString]
     listRepr d = L.map (repr' d)
 
-instance ListAsRows ByteString
-instance ListAsRows Bool
-instance ListAsRows Double
-instance ListAsRows Float
-instance ListAsRows Int
-instance ListAsRows Integer
+-- |Automatically derive from show
+-- Test automatically derived instances
+-- >>> mapM_ Data.ByteString.Lazy.Char8.putStrLn $ repr Data.ByteString.Lazy.Char8.empty [()]
+-- ()
+instance {-# OVERLAPPABLE #-} (Show a) => ListAsRows a
+
 instance (Row a) => ListAsRows (Maybe a)
-instance ListAsRows ()
 instance (ListAsRow a,ListAsRows a) => ListAsRows [a]
 instance (Row a,Row b) => ListAsRows (a,b)
 instance (Row a,Row b,Row c) => ListAsRows (a,b,c)
@@ -301,12 +304,13 @@ class (Show a) => Rows a where
          -> [C8.ByteString]
     repr _ = (:[]) . C8.pack . show
 
-
-instance Rows Bool
-instance Rows Double
-instance Rows Float
-instance Rows Int
-instance Rows Integer
+-- |Automatically derive from show
+-- Test automatically derived instances
+-- >>> mapM_ Data.ByteString.Lazy.Char8.putStrLn $ repr (Data.ByteString.Lazy.Char8.singleton '\n') ["a", "b", "c"]
+-- a
+-- b
+-- c
+instance {-# OVERLAPPABLE #-} (Show a) => Rows a
 
 instance Rows () where
     repr _ = const [C8.empty]

@@ -54,6 +54,7 @@ Executable hawk
                   , directory
                   , exceptions >=0.1
                   , extra
+                  , filelock
                   , filepath
                   , haskell-awk
                   , haskell-src-exts >=1.16.0 && < 1.18
@@ -66,6 +67,42 @@ Executable hawk
                   , time
                   , transformers >=0.3.0.0
     hs-source-dirs: src
+    Other-Modules:  Control.Monad.Trans.OptionParser
+                  , Control.Monad.Trans.State.Persistent
+                  , Control.Monad.Trans.Uncertain
+                  , Data.Cache
+                  , Data.HaskellExpr
+                  , Data.HaskellExpr.Base
+                  , Data.HaskellExpr.Eval
+                  , Data.HaskellModule
+                  , Data.HaskellModule.Base
+                  , Data.HaskellModule.Parse
+                  , Data.HaskellSource
+                  , Data.Monoid.Ord
+                  , Language.Haskell.Exts.Location
+                  , Paths_haskell_awk
+                  , System.Console.Hawk
+                  , System.Console.Hawk.Args
+                  , System.Console.Hawk.Args.Option
+                  , System.Console.Hawk.Args.Parse
+                  , System.Console.Hawk.Context
+                  , System.Console.Hawk.Context.Base
+                  , System.Console.Hawk.Context.Dir
+                  , System.Console.Hawk.Context.Paths
+                  , System.Console.Hawk.Help
+                  , System.Console.Hawk.Interpreter
+                  , System.Console.Hawk.Lock
+                  , System.Console.Hawk.Runtime.HaskellExpr
+                  , System.Console.Hawk.Sandbox
+                  , System.Console.Hawk.UserExpr.CanonicalExpr
+                  , System.Console.Hawk.UserExpr.InputReadyExpr
+                  , System.Console.Hawk.UserExpr.OriginalExpr
+                  , System.Console.Hawk.UserPrelude
+                  , System.Console.Hawk.UserPrelude.Defaults
+                  , System.Console.Hawk.UserPrelude.Extend
+                  , System.Console.Hawk.Version
+                  , System.Directory.Extra
+                  , System.Directory.PathFinder
 
 Library
     exposed-modules: System.Console.Hawk.Args.Spec
@@ -86,6 +123,7 @@ Test-suite reference
   Type:                 exitcode-stdio-1.0
   Ghc-Options:          -Wall
   Build-Depends:        base >=4.6.0.1 && <5
+                      , aeson
                       , bytestring
                       , containers
                       , directory
@@ -93,6 +131,7 @@ Test-suite reference
                       , easy-file
                       , exceptions >=0.1
                       , extra
+                      , filelock
                       , filepath
                       , haskell-awk
                       , haskell-src-exts >=1.14.0 && < 1.18
@@ -109,4 +148,42 @@ Test-suite reference
                       , test-framework-hunit >=0.2.0
                       , time
                       , transformers >=0.3.0.0
+  Other-Modules:      Control.Monad.Trans.OptionParser
+                      , Control.Monad.Trans.State.Persistent
+                      , Control.Monad.Trans.Uncertain
+                      , Data.Cache
+                      , Data.HaskellExpr
+                      , Data.HaskellExpr.Base
+                      , Data.HaskellExpr.Eval
+                      , Data.HaskellModule
+                      , Data.HaskellModule.Base
+                      , Data.HaskellModule.Parse
+                      , Data.HaskellSource
+                      , Data.Monoid.Ord
+                      , Language.Haskell.Exts.Location
+                      , Paths_haskell_awk
+                      , System.Console.Hawk
+                      , System.Console.Hawk.Args
+                      , System.Console.Hawk.Args.Option
+                      , System.Console.Hawk.Args.Parse
+                      , System.Console.Hawk.Context
+                      , System.Console.Hawk.Context.Base
+                      , System.Console.Hawk.Context.Dir
+                      , System.Console.Hawk.Context.Paths
+                      , System.Console.Hawk.Help
+                      , System.Console.Hawk.Interpreter
+                      , System.Console.Hawk.Lock
+                      , System.Console.Hawk.Representable.Test
+                      , System.Console.Hawk.Runtime.HaskellExpr
+                      , System.Console.Hawk.Sandbox
+                      , System.Console.Hawk.Test
+                      , System.Console.Hawk.UserExpr.CanonicalExpr
+                      , System.Console.Hawk.UserExpr.InputReadyExpr
+                      , System.Console.Hawk.UserExpr.OriginalExpr
+                      , System.Console.Hawk.UserPrelude
+                      , System.Console.Hawk.UserPrelude.Defaults
+                      , System.Console.Hawk.UserPrelude.Extend
+                      , System.Console.Hawk.Version
+                      , System.Directory.Extra
+                      , System.Directory.PathFinder
   Default-Language: Haskell98

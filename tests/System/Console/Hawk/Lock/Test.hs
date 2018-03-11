@@ -72,9 +72,11 @@ printDelayed (x:xs) = do threadDelay 10000
 -- two instances are trying to enter `withLock` at the same time.
 -- 
 -- >>> withTestLock print3
+-- ** LOCKED **
 -- 1
 -- 2
 -- 3
+-- ** UNLOCKED **
 -- 
 -- >>> withTestLock print3 `par` withTestLock print3
 -- ** LOCKED **
@@ -82,27 +84,29 @@ printDelayed (x:xs) = do threadDelay 10000
 -- 2
 -- 3
 -- ** UNLOCKED **
+-- ** LOCKED **
 -- 1
 -- 2
 -- 3
+-- ** UNLOCKED **
 -- 
 -- Here is a variant of the previous test which tests a race condition in which
 -- instance 1 releases the lock immediately after instance 2 notices that the
 -- lock is busy, but before instance 2 begins waiting for the lock to be released.
 -- 
--- We can trigger this special case with a bit of collaboration from `withTestLock`.
--- It inserts an artificial delay at the point in which we want the lock to be
--- released, and we time our instances so that instance 1 unlocks just at the right
--- moment.
+-- This test case has been covered with filelock, the second process will be blocked
+-- at any point if the first process is running.
 -- 
 -- >>> withTestLock print3 `par` (threadDelay 15000 >> withTestLock print3)
--- 1
 -- ** LOCKED **
+-- 1
 -- 2
 -- 3
 -- ** UNLOCKED **
+-- ** LOCKED **
 -- 1
 -- 2
 -- 3
+-- ** UNLOCKED **
 print3 :: IO ()
 print3 = printDelayed [1..3]
