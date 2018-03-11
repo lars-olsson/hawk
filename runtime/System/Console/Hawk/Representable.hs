@@ -1,3 +1,5 @@
+{-# LANGUAGE FlexibleInstances, UndecidableInstances, OverlappingInstances#-}
+
 --   Copyright 2013 Mario Pastorelli (pastorelli.mario@gmail.com) Samuel Gélineau (gelisam@gmail.com)
 --
 --   Licensed under the Apache License, Version 2.0 (the "License");
@@ -135,6 +137,9 @@ class (Show a) => Row a where
           -> ByteString
     repr' _ = C8.pack . show
 
+-- |Automatically derive from show
+instance (Show a) => Row a
+
 instance Row Bool
 instance Row Float
 instance Row Double
@@ -249,6 +254,9 @@ class (Row a) => ListAsRows a where
                -> [ByteString]
     listRepr d = L.map (repr' d)
 
+-- |Automatically derive from show
+instance (Show a) => ListAsRows a
+
 instance ListAsRows ByteString
 instance ListAsRows Bool
 instance ListAsRows Double
@@ -301,6 +309,7 @@ class (Show a) => Rows a where
          -> [C8.ByteString]
     repr _ = (:[]) . C8.pack . show
 
+instance (Show a) => Rows a
 
 instance Rows Bool
 instance Rows Double
