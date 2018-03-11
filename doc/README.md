@@ -219,10 +219,10 @@ For the cell content type, any type that is instance of
 is valid.
 
 For the list of fields, any type that is instance of
-[Row](https://raw.github.com/gelisam/hawk/master/src/System/Console/Hawk/Representable.hs) can be used. All standard data types are instance of this class.
+[Row](https://raw.githubusercontent.com/gelisam/hawk/master/runtime/System/Console/Hawk/Representable.hs) can be used. All standard data types are instance of this class.
 
 For the list of records, any type that is instance of
-[Rows](https://raw.github.com/gelisam/hawk/master/src/System/Console/Hawk/Representable.hs) can be used. All standard data types are instance of this class.
+[Rows](https://raw.githubusercontent.com/gelisam/hawk/master/runtime/System/Console/Hawk/Representable.hs) can be used. All standard data types are instance of this class.
 
 Let's do some examples to better understand how this works.
 
